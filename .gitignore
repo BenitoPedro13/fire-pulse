@@ -1,0 +1,30 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+*~
+
+# Env files (keep a committed .env.example once code exists). API keys live here, never in git.
+.env*
+!.env.example
+
+# Research samples: commit only small, representative captures.
+# Large captures (full-day CSVs, shapefiles, GRIB/NetCDF, multi-poll dumps) stay local;
+# record their source URL and capture time in docs/research/README.md instead.
+# A deliberately small, trimmed file can still be committed with `git add -f`.
+docs/research/samples/**/*.zip
+docs/research/samples/**/*.gz
+docs/research/samples/**/*.zst
+docs/research/samples/**/*.parquet
+docs/research/samples/**/*.nc
+docs/research/samples/**/*.grib
+docs/research/samples/**/*.grib2
+docs/research/samples/**/*.tif
+docs/research/samples/**/*.shp
+docs/research/samples/**/*.pmtiles
+docs/research/samples/**/large/
+docs/research/samples/**/*.large.*
