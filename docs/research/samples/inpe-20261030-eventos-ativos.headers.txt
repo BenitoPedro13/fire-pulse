@@ -1,0 +1,21 @@
+HTTP/1.1 200 OK
+Date: Fri, 30 Oct 2026 20:16:33 GMT
+Server: Apache
+Content-Security-Policy: frame-ancestors 'self' https://*.inpe.br
+X-Content-Type-Options: nosniff
+Referrer-Policy: no-referrer
+X-XSS-Protection: 1; mode=block
+Access-Control-Allow-Origin: *
+Access-Control-Allow-Methods: GET, HEAD, OPTIONS
+Access-Control-Allow-Headers: Content-Type, Range
+Last-Modified: Fri, 30 Oct 2026 19:21:08 GMT
+ETag: "139b000-65f13b2bde9e8"
+Accept-Ranges: bytes
+Content-Length: 20557824
+Content-Security-Policy: default-src 'self'; upgrade-insecure-requests;
+Strict-Transport-Security: max-age=31536000; includeSubDomains
+X-Content-Type-Options: nosniff
+X-XSS-Protection: 1; mode=block
+Referrer-Policy: strict-origin
+X-Frame-Options: deny
+

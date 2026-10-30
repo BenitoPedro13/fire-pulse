@@ -1,0 +1,15 @@
+HTTP/2 200 
+server: nginx
+date: Fri, 30 Oct 2026 20:07:39 GMT
+content-type: text/csv
+content-length: 1080246
+accept-ranges: bytes
+last-modified: Fri, 30 Oct 2026 19:49:08 GMT
+x-rgw-object-type: Normal
+etag: "f945c7ec1a17821a9c2403644aadba32"
+x-amz-meta-md5: f945c7ec1a17821a9c2403644aadba32
+x-amz-meta-sha256: 2436eac5d940d6999cd1bd7e1047f3f3a026d52fe85a37ae302d4ce0da51da73
+x-amz-request-id: tx00000e8c18aedd20d7208-006ae4f90b-491022789-default
+request-id: beae99ac6d5c7612408e2f96eb10120f
+strict-transport-security: max-age=31536000; includeSubDomains
+

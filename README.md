@@ -9,7 +9,7 @@ It's also a portfolio case study in distributed, data-heavy real-time systems, a
 Renewable Pulse, Apuração 2026 and Transit Pulse. This one is about **spatial and temporal
 joins across several streams** that arrive at different rates and out of order.
 
-**Status: planning, no code yet.**
+**Status: planning, no code yet.** The source inventory is partly verified (2026-10-30); OpenAQ and INMET are waiting on keys.
 
 ## Docs
 

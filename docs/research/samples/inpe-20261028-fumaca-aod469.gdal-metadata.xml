@@ -1,0 +1,51 @@
+<GDALMetadata>
+  <Item name="aod469#long_name">Total Aerosol Optical Depth at 469nm</Item>
+  <Item name="aod469#missing_value">nan</Item>
+  <Item name="aod469#standard_name">unknown</Item>
+  <Item name="aod469#units">~</Item>
+  <Item name="aod469#_FillValue">nan</Item>
+  <Item name="forecast_period#axis">T</Item>
+  <Item name="forecast_period#bounds">forecast_period_bnds</Item>
+  <Item name="forecast_period#calendar">proleptic_gregorian</Item>
+  <Item name="forecast_period#long_name">time since forecast_reference_time</Item>
+  <Item name="forecast_period#standard_name">time</Item>
+  <Item name="forecast_period#units">hours</Item>
+  <Item name="forecast_reference_time#axis">Z</Item>
+  <Item name="forecast_reference_time#long_name">initial time of forecast</Item>
+  <Item name="forecast_reference_time#standard_name">forecast_reference_time</Item>
+  <Item name="forecast_reference_time#units">seconds since 1970-01-01</Item>
+  <Item name="latitude#axis">Y</Item>
+  <Item name="latitude#long_name">latitude</Item>
+  <Item name="latitude#standard_name">latitude</Item>
+  <Item name="latitude#units">degrees_north</Item>
+  <Item name="longitude#axis">X</Item>
+  <Item name="longitude#long_name">longitude</Item>
+  <Item name="longitude#standard_name">longitude</Item>
+  <Item name="longitude#units">degrees_east</Item>
+  <Item name="NC_GLOBAL#CDI">Climate Data Interface version 2.2.1 (https://mpimet.mpg.de/cdi)</Item>
+  <Item name="NC_GLOBAL#CDO">Climate Data Operators version 2.2.0 (https://mpimet.mpg.de/cdo)</Item>
+  <Item name="NC_GLOBAL#Conventions">CF-1.7</Item>
+  <Item name="NC_GLOBAL#frequency">day</Item>
+  <Item name="NC_GLOBAL#GRIB_centre">ecmf</Item>
+  <Item name="NC_GLOBAL#GRIB_centreDescription">European Centre for Medium-Range Weather Forecasts</Item>
+  <Item name="NC_GLOBAL#history">Fri Oct 30 08:00:46 2026: cdo -expr,aod469=(aod469 &amp;gt; 1.0) ? 1.0 : aod469 /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/media_diaria_aod_20261028_escalonada_ncaod469.nc /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/media_diaria_aod_0a1_20261028.ncaod469.nc
+Fri Oct 30 08:00:46 2026: cdo expr,aod469 = aod469 / 3 /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/media_diaria_aod_20261028.ncaod469.nc /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/media_diaria_aod_20261028_escalonada_ncaod469.nc
+Fri Oct 30 08:00:46 2026: cdo daymean /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/cams_aod_mex_sul_daily_20261028.ncaod469.nc /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/media_diaria_aod_20261028.ncaod469.nc
+Fri Oct 30 08:00:46 2026: cdo splitvar /home/queimadas/aod/AOD_ECMWF/operacional/2026/cams_aod_mex_sul_daily_20261028.nc /home/queimadas/aod/AOD_ECMWF/operacional/MEDIA_DIARIA_AOD_FATOR3/cams_aod_mex_sul_daily_20261028.nc
+2026-10-30T08:00 GRIB to CDM+CF via cfgrib-0.9.15.1/ecCodes-2.48.2 with {&amp;quot;source&amp;quot;: &amp;quot;tmp4tonvllo/data.grib&amp;quot;, &amp;quot;filter_by_keys&amp;quot;: {&amp;quot;typeOfLevel&amp;quot;: [&amp;quot;surface&amp;quot;, &amp;quot;mostUnstableParcel&amp;quot;]}, &amp;quot;encode_cf&amp;quot;: [&amp;quot;parameter&amp;quot;, &amp;quot;time&amp;quot;, &amp;quot;geography&amp;quot;, &amp;quot;vertical&amp;quot;]}</Item>
+  <Item name="NC_GLOBAL#institution">European Centre for Medium-Range Weather Forecasts</Item>
+  <Item name="NETCDF_DIM_EXTRA">{forecast_period,forecast_reference_time}</Item>
+  <Item name="NETCDF_DIM_forecast_period_DEF">{1,6}</Item>
+  <Item name="NETCDF_DIM_forecast_period_VALUES">0</Item>
+  <Item name="NETCDF_DIM_forecast_reference_time_DEF">{2,6}</Item>
+  <Item name="NETCDF_DIM_forecast_reference_time_VALUES">{1793145600,1793188800}</Item>
+  <Item name="long_name" sample="0">Total Aerosol Optical Depth at 469nm</Item>
+  <Item name="missing_value" sample="0">nan</Item>
+  <Item name="NETCDF_DIM_forecast_period" sample="0">0</Item>
+  <Item name="NETCDF_DIM_forecast_reference_time" sample="0">1793145600</Item>
+  <Item name="NETCDF_VARNAME" sample="0">aod469</Item>
+  <Item name="standard_name" sample="0">unknown</Item>
+  <Item name="units" sample="0">~</Item>
+  <Item name="_FillValue" sample="0">nan</Item>
+  <Item name="UNITTYPE" sample="0" role="unittype">~</Item>
+</GDALMetadata>
