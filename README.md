@@ -17,4 +17,6 @@ joins across several streams** that arrive at different rates and out of order.
 - [`docs/research/README.md`](docs/research/README.md): the verified source inventory.
 - [`docs/architecture.md`](docs/architecture.md): scope, contracts, the join, hosting, replay
   and open questions.
+- [`docs/build-guide.md`](docs/build-guide.md): how the system works and the milestones to
+  build it, in order.
 - [`docs/tasks/`](docs/tasks/): one task document per piece of work, written before the work.

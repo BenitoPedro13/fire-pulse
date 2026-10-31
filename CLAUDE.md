@@ -34,6 +34,9 @@ streams** that arrive at different rates, with different latencies, and out of o
 2. `docs/architecture.md`: scope, coverage tiers, the canonical events, the join, the system
    shape, hosting and cost, the replay-first ending, retention and open questions.
 3. `docs/research/ux-direction.md`: what a visitor can do and see.
+4. `docs/build-guide.md`: the concepts and the milestone order. **The user writes the code
+   themselves (2026-10-30)**; Claude guides, explains and reviews, and writes code only when
+   asked.
 
 A sibling project (floods and rivers: ANA, CEMADEN) may come later. Lessons should carry over,
 but nothing here is designed for it.
@@ -205,6 +208,7 @@ fire-pulse/
 ├── .gitignore
 └── docs/
     ├── architecture.md
+    ├── build-guide.md      # how it works + milestones, for building it by hand
     ├── research/           # source inventory + samples/ (real captured provider responses)
     └── tasks/              # task documents (§1)
 ```
