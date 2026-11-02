@@ -4,11 +4,13 @@ Verified facts about every data source, each backed by a real captured response 
 **Nothing here may come from memory.** A cell is filled in only after it has been checked
 against the live source, with the URL linked and the capture date stated.
 
-**Status (2026-10-30): partly verified** by `docs/tasks/TASK-source-inventory.md`. All captures
+**Status (2026-11-02): partly verified** by `docs/tasks/TASK-source-inventory.md`. Initial captures
 ran on 2026-10-30 between 20:07 and 20:40 UTC (a Friday, late in the dry/fire season), with the
 User-Agent `fire-pulse-research/0.1 (one-off source inventory; contact: repo owner)`.
-**Blocked:** OpenAQ and INMET station data need keys the user has to request (see "Keys" at the
-end). Their rows stay partly `[VERIFY]` until then.
+Authenticated OpenAQ captures on 2026-11-02 used `fire-pulse-research/0.1` (see §4).
+**Blocked:** INMET station data still needs a token (see "Keys" at the end). OpenAQ authentication,
+Brazilian PM2.5 location discovery and a 48-hour Manaus measurement sample are now verified;
+national sensor freshness and spatial coverage remain partly `[VERIFY]`.
 
 > Method warning for whoever repeats these numbers: this Mac's shell locale is `pt_BR`, so
 > `awk` reads `-7.29` as `-7` unless it runs under `LC_ALL=C`. The first duplicate and distance
@@ -29,7 +31,7 @@ reanalysis output.
 | INPE "Eventos de Fogo" | detections grouped into **fire events** with polygons, area, fronts, duration | derived from observed (INPE's own clustering, "Provisório") | [§2.3](#23-fire-events-eventos-de-fogo) | none | hourly (page); GPKG `Last-Modified` 19:21 | — | GPKG / KML | `[VERIFY]` | **yes, 2026-10-30** |
 | INPE "Fumaça AOD469" | daily mean aerosol optical depth | **modelled** (ECMWF CAMS), rescaled ÷3 and capped at 1.0, **although INPE files it under "observado"** | [§2.4](#24-fumaça-aod469-a-model-filed-as-observed) | none | daily, ≈ 2 days late | — | GeoTIFF, 231×230 | `[VERIFY]` | **yes, 2026-10-30** |
 | INPE DETER (TerraBrasilis) | deforestation and **burn-scar** polygons, Amazon + Cerrado | observed (CBERS-4 / Amazonia-1 imagery, human-classified) | [§3](#3-inpe-deter) | none | `[VERIFY]` | newest `view_date` 2026-10-23, a week old | WFS (GeoJSON) | `[VERIFY]` | **yes, 2026-10-30** (5-alert sample; the WFS failed on larger requests) |
-| OpenAQ v3 | air-quality stations (PM2.5 …) | observed | [§4](#4-openaq) | **free API key (`X-API-Key`)** | `[VERIFY]` | `[VERIFY]` | JSON | no blanket licence; per-provider terms + attribution to OpenAQ | **blocked on the key** |
+| OpenAQ v3 | air-quality stations (PM2.5 …) | observed | [§4](#4-openaq) | **free API key (`X-API-Key`)**, authenticated | Manaus: 48 consecutive hourly measurement periods; API update cadence `[VERIFY]` | `[VERIFY]` | JSON | per-provider terms; Manaus: CC BY 4.0, Greenpeace; attribution to OpenAQ | **partly, 2026-11-02**; 75 PM2.5 locations, Manaus history checked |
 | INMET automatic stations | **observed wind**, temperature, humidity, rain, hourly | observed | [§5](#5-inmet-automatic-weather-stations) | station list: none; **data: token** | `[VERIFY]` | `[VERIFY]` | JSON | `[VERIFY]` | station list **yes**; data **blocked on the token** |
 | Open-Meteo forecast | 10 m wind speed/direction/gusts | **modelled** (ICON / GFS / IFS global; no South American regional model) | [§6.1](#61-forecast-api-wind) | none | `[VERIFY: model run cadence]` | — | JSON | CC BY 4.0, non-commercial free tier | **yes, 2026-10-30** |
 | Open-Meteo air quality | PM2.5, AOD, CO, dust … | **modelled** (CAMS global, 0.4°, 3-hourly) | [§6.2](#62-air-quality-api-cams) | none | CAMS global every 12 h (docs) | — | JSON | CC BY 4.0 + CAMS attribution | **yes, 2026-10-30** |
@@ -68,7 +70,7 @@ reanalysis output.
    fabricated" rule it must be shown as a model, and the ÷3 rescale means it isn't even raw AOD.
    Open-Meteo serves the unscaled CAMS fields hourly, so INPE's file adds nothing.
 6. **There is no observed smoke plume in any source checked.** Observed data near a fire is:
-   the detections themselves, ground air-quality stations (OpenAQ, blocked on a key) and ground
+   the detections themselves, ground air-quality stations (OpenAQ, Manaus sample verified) and ground
    wind (INMET, blocked on a token). Smoke transport exists only as **CAMS model output**. The
    headline "see the smoke reach the city" is honest only as **"a fire was detected here; this
    station downwind measured this"**, with CAMS as a clearly labelled model layer. See
@@ -76,8 +78,8 @@ reanalysis output.
 7. **Stations are far from fires.** Of 23,072 detections on 2026-10-29, the nearest *operating*
    INMET station (540 of 669) was within 25 km for **3.1%**, within 50 km for **13.3%**, within
    100 km for **54.7%** and within 200 km for **92.4%**. 81% of that day's detections were in the
-   Amazon. Air-quality stations are expected to be sparser still in the Amazon
-   (`[VERIFY: OpenAQ Brazilian locations, once the key exists]`). A join radius of 25–50 km
+   Amazon. OpenAQ lists 75 Brazilian locations with PM2.5 sensors as of 2026-11-02, including
+   Manaus (`[VERIFY: sensor-level freshness nationally and distance from fire detections]`). A join radius of 25–50 km
    would match almost nothing; the join has to be framed around **cities with a station**, not
    around fires.
 8. **Volume swings ≈ 145× between seasons.** All satellites, Brazil: **353** detections on a
@@ -90,7 +92,8 @@ reanalysis output.
    `304` for both.
 10. **OpenAQ v3 and INMET need credentials.** OpenAQ v1/v2 are gone (`410`); v3 returns `401`
     without `X-API-Key`. INMET's data endpoints return `204` without a token and "CHAVE
-    INVÁLIDA!" with a wrong one. **The user has to register** (see "Keys").
+    INVÁLIDA!" with a wrong one. **OpenAQ registration and authenticated requests are verified
+    as of 2026-11-02; INMET data remains blocked on its token** (see "Keys").
 11. **DETER doesn't belong in the live fire scope.** It's deforestation plus burn-scar polygons
     classified from CBERS-4/Amazonia-1 imagery, with the newest `view_date` a week old, and its
     WFS failed on anything beyond a handful of features. At most a later "context" layer
@@ -275,7 +278,7 @@ listings; listing times are **America/Sao_Paulo**, file names are **UTC**). `Acc
 
 ## 4. OpenAQ
 
-- `https://api.openaq.org/v3/…` → `401` "A valid API key must be provided in the X-API-Key
+- Without a key (2026-10-30), `https://api.openaq.org/v3/…` → `401` "A valid API key must be provided in the X-API-Key
   header." `https://api.openaq.org/v2/locations` → `410` "Version 1 and Version 2 API endpoints
   are retired".
 - Docs (read 2026-10-30): free key at `explore.openaq.org/register`, **60 requests/min and
@@ -291,9 +294,66 @@ listings; listing times are **America/Sao_Paulo**, file names are **UTC**). `Acc
 - Terms (<https://docs.openaq.org/about/terms>): no single licence; follow each original
   provider's terms; "Attribution to OpenAQ … is also required"; downloading "strictly prohibited
   unless done through registered and authorized use".
-- **Unmeasured until the key exists:** Brazilian locations, how many reported PM2.5 in the last
-  24 h, their reporting interval, distance from fire clusters, and which Brazilian networks
-  (state agencies, low-cost sensors) they come from.
+
+### 4.1 Authenticated Brazilian PM2.5 research — 2026-11-02
+
+The user captured the following responses with `X-API-Key` authentication and User-Agent
+`fire-pulse-research/0.1`. Exact fetch times and response headers were not saved with these
+samples; measurement timestamps below are not fetch times.
+
+- Location query:
+  <https://api.openaq.org/v3/locations?iso=BR&parameters_id=2&limit=1000&page=1>.
+  `parameters_id=2` selects PM2.5. `meta.found: 75` matches the 75 returned locations, so this
+  query needs no additional page. This counts locations with PM2.5 sensors, not all Brazilian
+  air-quality locations or currently reporting PM2.5 sensors.
+  Sample: [openaq-20261102-br-pm25-locations.json](samples/openaq-20261102-br-pm25-locations.json).
+
+| Provider | Locations with PM2.5 sensors | Location `datetimeLast.utc` dated 2026-11-02 |
+|---|---|---|
+| Rio City Hall | 27 | 24 |
+| AirGradient | 12 | 8 |
+| Sao Paulo CETESB | 31 | 0 |
+| Sao Paulo | 1 | 0 |
+| AirNow | 1 | 0 |
+| HabitatMap | 3 | 0 |
+| **Total** | **75** | **32** |
+
+- The 32 same-date timestamps are **location-level metadata**, not verified PM2.5 sensor
+  freshness or a count of sensors reporting in the last 24 hours. All 31 Sao Paulo CETESB
+  locations have timestamps from 2022 or 2023. This describes availability through OpenAQ,
+  not whether the physical stations still operate.
+- **Manaus location `5040030`, sensor `13574643`:** coordinates
+  `(-3.1209190075022586, -60.021405806179125)`, provider AirGradient, owner Greenpeace,
+  instrument `AirGradient Open Air Generation 1 (O-1PST)`. `isMobile: false`; `isMonitor: false`
+  means OpenAQ does not classify it as a reference monitor, not that it is inactive
+  ([location API reference](https://docs.openaq.org/api/operations/locations_get_v3_locations_get)).
+  The location metadata lists **CC BY 4.0**, attribution **Greenpeace**, `dateFrom: 2023-07-15`,
+  `dateTo: null`. Preserve that attribution and credit OpenAQ; link the licence and disclose
+  modifications as required by [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+- Sensor query: <https://api.openaq.org/v3/sensors/13574643>.
+  Parameter `pm25`, unit `µg/m³`, first measurement timestamp `2025-07-11T19:00:00Z`, latest
+  `2026-11-02T21:00:00Z` (`17:00` in Manaus, UTC−04:00), latest value **54.7 µg/m³**.
+  These endpoints do not establish uninterrupted history. The sensor coverage summary has
+  `expectedCount: 1`, `observedCount: 9087` and both percentages `908700.0`; do not use these
+  percentages as a completeness estimate. `[VERIFY: sensor coverage-summary semantics]`.
+  Sample: [openaq-20261102-manaus-sensor.json](samples/openaq-20261102-manaus-sensor.json).
+- Measurement query:
+  <https://api.openaq.org/v3/sensors/13574643/measurements?datetime_from=2026-10-31T21:00:00Z&datetime_to=2026-11-02T21:00:00Z&limit=1000&page=1>.
+  `meta.found: 48` matches the 48 returned records. They cover **48 consecutive one-hour
+  periods**, from `2026-10-31T21:00:00Z` through `2026-11-02T21:00:00Z`, with no gaps,
+  overlaps or missing values. Values range from **32.1 to 54.7 µg/m³**; all records report
+  `flagInfo.hasFlags: false`, which alone does not establish accuracy. The last value covers
+  `20:00–21:00 UTC`; preserve both period boundaries rather than treating it as an instantaneous
+  reading. Measurement coordinates are `null`; the stationary location supplies coordinates.
+  The endpoint returns original provider-reported values
+  ([measurement documentation](https://docs.openaq.org/resources/measurements)).
+  Sample: [openaq-20261102-manaus-measurements-48h.json](samples/openaq-20261102-manaus-measurements-48h.json).
+- **Still unverified:** PM2.5 sensor freshness across Brazil and count reporting in the last
+  24 hours; continuity outside the Manaus sample; API update cadence and first-availability
+  delay; station distances from fire detections at 50 / 100 / 200 km; terms for other locations;
+  response caching/conditional-request behaviour and request/retention volumes. A recent
+  reading or complete retrospective window does not measure delivery delay or establish that
+  fires caused the measured PM2.5.
 
 ## 5. INMET automatic weather stations
 
